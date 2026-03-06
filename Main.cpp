@@ -52,6 +52,12 @@ int main(int argc, char *argv[])
 {
   qInstallMessageHandler(myMessageOutput);
 
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+  // Ensure tray menus and dialogs scale correctly on high-DPI displays (Windows 10/11).
+  QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+#endif
+
   // To fix networking problems as Qt looks for updated networks every 10 seconds...
   // https://bugreports.qt.io/browse/QTBUG-46015
   // WARNING: This could break wifi detection
@@ -148,4 +154,3 @@ int main(int argc, char *argv[])
 
   return resultValue;
 }
-
